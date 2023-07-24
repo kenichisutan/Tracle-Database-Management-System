@@ -445,7 +445,7 @@ class Ui_Dialog(object):
         self.tableWidget.setRowCount(0)
         cursor = self.cnx.cursor()
 
-        query = "Select * From students"
+        query = "Select * From students Order by ID Asc"
 
         cursor.execute(query)
 
