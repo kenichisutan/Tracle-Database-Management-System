@@ -46,6 +46,21 @@
         <string>Course ID</string>
        </property>
       </column>
+      <column>
+       <property name="text">
+        <string>Days</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Start Time</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>End Time</string>
+       </property>
+      </column>
      </widget>
     </item>
    </layout>
@@ -212,7 +227,7 @@
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="txtClasscID">
+     <widget class="QLineEdit" name="txtClassID">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -253,7 +268,7 @@
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
     <item row="1" column="0">
-     <widget class="QLabel" name="lblCourseID">
+     <widget class="QLabel" name="lblDays">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -261,12 +276,12 @@
        </font>
       </property>
       <property name="text">
-       <string>Course ID:</string>
+       <string>Days:</string>
       </property>
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="txtCourseID">
+     <widget class="QLineEdit" name="txtDays">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -275,6 +290,32 @@
       </property>
       <property name="text">
        <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="lblStartTime">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Start Time:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QTimeEdit" name="timeStartTime">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="calendarPopup">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
