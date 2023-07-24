@@ -41,7 +41,7 @@ class Ui_Dialog(object):
         self.tableWidget = QtWidgets.QTableWidget(self.horizontalLayoutWidget)
         self.tableWidget.setStyleSheet("")
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(7)
+        self.tableWidget.setColumnCount(6)
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
@@ -55,8 +55,6 @@ class Ui_Dialog(object):
         self.tableWidget.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(5, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(6, item)
         self.horizontalLayout.addWidget(self.tableWidget)
         self.verticalLayoutWidget = QtWidgets.QWidget(Dialog)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(700, 80, 81, 491))
@@ -110,7 +108,7 @@ class Ui_Dialog(object):
         self.formLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.formLayout.setFieldGrowthPolicy(QtWidgets.QFormLayout.AllNonFixedFieldsGrow)
         self.formLayout.setRowWrapPolicy(QtWidgets.QFormLayout.DontWrapRows)
-        self.formLayout.setFormAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.formLayout.setFormAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.formLayout.setContentsMargins(0, 0, 0, 0)
         self.formLayout.setHorizontalSpacing(6)
         self.formLayout.setObjectName("formLayout")
@@ -148,7 +146,7 @@ class Ui_Dialog(object):
         self.formLayoutWidget_2.setGeometry(QtCore.QRect(380, 10, 311, 61))
         self.formLayoutWidget_2.setObjectName("formLayoutWidget_2")
         self.formLayout_2 = QtWidgets.QFormLayout(self.formLayoutWidget_2)
-        self.formLayout_2.setFormAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.formLayout_2.setFormAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.formLayout_2.setContentsMargins(0, 0, 0, 0)
         self.formLayout_2.setObjectName("formLayout_2")
         self.lblDays = QtWidgets.QLabel(self.formLayoutWidget_2)
@@ -193,7 +191,7 @@ class Ui_Dialog(object):
         self.lblTitle.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.lblTitle.setAutoFillBackground(False)
         self.lblTitle.setStyleSheet("background-color: rgb(22, 9, 88);\n"
-"color: rgb(255, 255, 255);")
+                                    "color: rgb(255, 255, 255);")
         self.lblTitle.setFrameShape(QtWidgets.QFrame.Box)
         self.lblTitle.setFrameShadow(QtWidgets.QFrame.Plain)
         self.lblTitle.setLineWidth(3)
@@ -242,8 +240,8 @@ class Ui_Dialog(object):
         self.verticalLayoutWidget_2.raise_()
 
         self.retranslateUi(Dialog)
-        self.btnClose.accepted.connect(Dialog.accept) # type: ignore
-        self.btnClose.rejected.connect(Dialog.reject) # type: ignore
+        self.btnClose.accepted.connect(Dialog.accept)  # type: ignore
+        self.btnClose.rejected.connect(Dialog.reject)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
         self.initialSetup()
@@ -258,12 +256,10 @@ class Ui_Dialog(object):
         item = self.tableWidget.horizontalHeaderItem(2)
         item.setText(_translate("Dialog", "Course ID"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("Dialog", "Professor ID"))
-        item = self.tableWidget.horizontalHeaderItem(4)
         item.setText(_translate("Dialog", "Days"))
-        item = self.tableWidget.horizontalHeaderItem(5)
+        item = self.tableWidget.horizontalHeaderItem(4)
         item.setText(_translate("Dialog", "Start Time"))
-        item = self.tableWidget.horizontalHeaderItem(6)
+        item = self.tableWidget.horizontalHeaderItem(5)
         item.setText(_translate("Dialog", "End Time"))
         self.btnNew.setText(_translate("Dialog", "New"))
         self.btnEdit.setText(_translate("Dialog", "Edit"))
@@ -318,7 +314,7 @@ class Ui_Dialog(object):
 
             largestID = 0
             # Retreive the largest ID
-            for (Class_ID, Semester_ID, Course_ID, Professor_ID, Days, StartTime, EndTime) in cursor:
+            for (Class_ID, Semester_ID, Course_ID, Days, StartTime, EndTime) in cursor:
                 if (Class_ID > largestID):
                     largestID = Class_ID
 
@@ -347,9 +343,8 @@ class Ui_Dialog(object):
         listValues.append(self.tableWidget.item(currentRow, 1).text())
         listValues.append(self.tableWidget.item(currentRow, 2).text())
         listValues.append(self.tableWidget.item(currentRow, 3).text())
-        listValues.append(self.tableWidget.item(currentRow, 4).text())
+        listValues.append(QTime.fromString(self.tableWidget.item(currentRow, 4).text(), "hh:mm:ss"))
         listValues.append(QTime.fromString(self.tableWidget.item(currentRow, 5).text(), "hh:mm:ss"))
-        listValues.append(QTime.fromString(self.tableWidget.item(currentRow, 6).text(), "hh:mm:ss"))
 
         print(listValues)
 
@@ -437,17 +432,16 @@ class Ui_Dialog(object):
 
         cursor.execute(query)
 
-        for(Class_ID, Semester_ID, Course_ID, Professor_ID, Days, StartTime, EndTime) in cursor:
-            print(Class_ID, Semester_ID, Course_ID, Professor_ID, Days, StartTime, EndTime)
+        for(Class_ID, Semester_ID, Course_ID, Days, StartTime, EndTime) in cursor:
+            print(Class_ID, Semester_ID, Course_ID, Days, StartTime, EndTime)
             rowCount = self.tableWidget.rowCount()
             self.tableWidget.insertRow(rowCount)
             self.tableWidget.setItem(rowCount, 0, QtWidgets.QTableWidgetItem(str(Class_ID)))
             self.tableWidget.setItem(rowCount, 1, QtWidgets.QTableWidgetItem(str(Semester_ID)))
             self.tableWidget.setItem(rowCount, 2, QtWidgets.QTableWidgetItem(str(Course_ID)))
-            self.tableWidget.setItem(rowCount, 3, QtWidgets.QTableWidgetItem(str(Professor_ID)))
-            self.tableWidget.setItem(rowCount, 4, QtWidgets.QTableWidgetItem(Days))
-            self.tableWidget.setItem(rowCount, 5, QtWidgets.QTableWidgetItem(str(StartTime)))
-            self.tableWidget.setItem(rowCount, 6, QtWidgets.QTableWidgetItem(str(EndTime)))
+            self.tableWidget.setItem(rowCount, 3, QtWidgets.QTableWidgetItem(Days))
+            self.tableWidget.setItem(rowCount, 4, QtWidgets.QTableWidgetItem(str(StartTime)))
+            self.tableWidget.setItem(rowCount, 5, QtWidgets.QTableWidgetItem(str(EndTime)))
 
         cursor.close()
 
@@ -455,11 +449,11 @@ class Ui_Dialog(object):
         cursor = self.cnx.cursor()
 
         query = "Insert Into class " \
-                "(Class_ID, Semester_ID, Course_ID, Professor_ID, Days, StartTime, EndTime) " \
-                "Values (%s, %s, %s, %s, %s, %s, %s)"
+                "(Class_ID, Semester_ID, Course_ID, Days, StartTime, EndTime) " \
+                "Values (%s, %s, %s, %s, %s, %s)"
 
+        listValues[4] = listValues[4].toString("HH:mm")
         listValues[5] = listValues[5].toString("HH:mm")
-        listValues[6] = listValues[6].toString("HH:mm")
 
         print(listValues)
 
@@ -473,11 +467,11 @@ class Ui_Dialog(object):
         cursor = self.cnx.cursor()
 
         query = "Update class " \
-                "Set Semester_ID = %s, Course_ID = %s, Professor_ID = %s, Days = %s, StartTime = %s, EndTime = %s " \
+                "Set Semester_ID = %s, Course_ID = %s, Days = %s, StartTime = %s, EndTime = %s " \
                 "Where Class_ID = %s"
 
+        listValues[4] = listValues[4].toString("HH:mm")
         listValues[5] = listValues[5].toString("HH:mm")
-        listValues[6] = listValues[6].toString("HH:mm")
 
         listValues.append(listValues.pop(0))
 
@@ -528,16 +522,15 @@ class Ui_Dialog(object):
 
         cursor.execute(query, values)
 
-        for (Class_ID, Semester_ID, Course_ID, Professor_ID, Days, StartTime, EndTime) in cursor:
+        for (Class_ID, Semester_ID, Course_ID, Days, StartTime, EndTime) in cursor:
             rowCount = self.tableWidget.rowCount()
             self.tableWidget.insertRow(rowCount)
             self.tableWidget.setItem(rowCount, 0, QtWidgets.QTableWidgetItem(str(Class_ID)))
             self.tableWidget.setItem(rowCount, 1, QtWidgets.QTableWidgetItem(str(Semester_ID)))
             self.tableWidget.setItem(rowCount, 2, QtWidgets.QTableWidgetItem(str(Course_ID)))
-            self.tableWidget.setItem(rowCount, 3, QtWidgets.QTableWidgetItem(str(Professor_ID)))
-            self.tableWidget.setItem(rowCount, 4, QtWidgets.QTableWidgetItem(Days))
-            self.tableWidget.setItem(rowCount, 5, QtWidgets.QTableWidgetItem(str(StartTime)))
-            self.tableWidget.setItem(rowCount, 6, QtWidgets.QTableWidgetItem(str(EndTime)))
+            self.tableWidget.setItem(rowCount, 3, QtWidgets.QTableWidgetItem(Days))
+            self.tableWidget.setItem(rowCount, 4, QtWidgets.QTableWidgetItem(str(StartTime)))
+            self.tableWidget.setItem(rowCount, 5, QtWidgets.QTableWidgetItem(str(EndTime)))
 
         cursor.close()
 
