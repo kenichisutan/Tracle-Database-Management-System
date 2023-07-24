@@ -341,6 +341,10 @@ class Ui_ReportsDialog(object):
 
         self.cmbSelectCourse.setCurrentIndex(-1)
 
+    # Total Students in a Semester:
+    # This report is crucial as it aids in capacity planning and forecasting resources
+    # based on student numbers. It helps understand enrollment trends, which are key for
+    # financial planning and scheduling decisions.
 
     def btnReportStudents_clicked(self):
         # Check if combobox is selected
@@ -355,6 +359,10 @@ class Ui_ReportsDialog(object):
         numStudents = self.reportStudents(semester)
         self.txtNumberOfStudents.setText(str(numStudents[0]))
 
+    # Total Courses in a Department:
+    # This report gives insights into the variety of courses a department offers.
+    # It's instrumental for academic planning and advising students about their course choices.
+
     def btnReportCourses_clicked(self):
         # Check if combobox is selected
         if self.cmbSelectDepartment.currentIndex() == -1:
@@ -368,6 +376,10 @@ class Ui_ReportsDialog(object):
         numCourses = self.reportCourses(department)
         self.txtNumberOfCourses.setText(str(numCourses[0]))
 
+    # Total Classes for a Course:
+    # This report helps understand the frequency of a particular course being taught,
+    # indicating resource allocation effectiveness. High student demand may call for additional
+    # resources, while low enrollment could suggest a need to redistribute resources.
 
     def btnReportClasses_clicked(self):
         # Check if combobox is selected
