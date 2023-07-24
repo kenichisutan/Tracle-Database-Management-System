@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\SemesterTable.ui'
+# Form implementation generated from reading ui file '.\CoursesTable.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -20,8 +20,7 @@ from PyQt5.QtCore import Qt, QCoreApplication
 import mysql.connector
 from PyQt5.QtWidgets import QMessageBox
 
-import SemesterDialog
-import StudentsDialog
+from windows import CoursesDialog
 
 QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)  # Enable high DPI scaling
 QCoreApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)  # Use high DPI icons
@@ -41,7 +40,7 @@ class Ui_Dialog(object):
         self.tableWidget = QtWidgets.QTableWidget(self.horizontalLayoutWidget)
         self.tableWidget.setStyleSheet("")
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(3)
+        self.tableWidget.setColumnCount(4)
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
@@ -49,6 +48,8 @@ class Ui_Dialog(object):
         self.tableWidget.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(3, item)
         self.horizontalLayout.addWidget(self.tableWidget)
         self.verticalLayoutWidget = QtWidgets.QWidget(Dialog)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(700, 80, 81, 491))
@@ -106,36 +107,35 @@ class Ui_Dialog(object):
         self.formLayout.setContentsMargins(0, 0, 0, 0)
         self.formLayout.setHorizontalSpacing(6)
         self.formLayout.setObjectName("formLayout")
-        self.lblSemesterID = QtWidgets.QLabel(self.formLayoutWidget)
+        self.lblCourseID = QtWidgets.QLabel(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-        self.lblSemesterID.setFont(font)
-        self.lblSemesterID.setObjectName("lblSemesterID")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.lblSemesterID)
-        self.lblSemester = QtWidgets.QLabel(self.formLayoutWidget)
+        self.lblCourseID.setFont(font)
+        self.lblCourseID.setObjectName("lblCourseID")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.lblCourseID)
+        self.lblTitle = QtWidgets.QLabel(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-        self.lblSemester.setFont(font)
-        self.lblSemester.setObjectName("lblSemester")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.lblSemester)
-        self.txtSemesterID = QtWidgets.QLineEdit(self.formLayoutWidget)
+        self.lblTitle.setFont(font)
+        self.lblTitle.setObjectName("lblTitle")
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.lblTitle)
+        self.txtCourseID = QtWidgets.QLineEdit(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-        self.txtSemesterID.setFont(font)
-        self.txtSemesterID.setText("")
-        self.txtSemesterID.setObjectName("txtSemesterID")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.txtSemesterID)
-        self.txtSemester = QtWidgets.QLineEdit(self.formLayoutWidget)
+        self.txtCourseID.setFont(font)
+        self.txtCourseID.setText("")
+        self.txtCourseID.setObjectName("txtCourseID")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.txtCourseID)
+        self.txtTitle = QtWidgets.QLineEdit(self.formLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-        self.txtSemester.setFont(font)
-        self.txtSemester.setText("")
-        self.txtSemester.setObjectName("txtSemester")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.txtSemester)
+        self.txtTitle.setFont(font)
+        self.txtTitle.setObjectName("txtTitle")
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.txtTitle)
         self.formLayoutWidget_2 = QtWidgets.QWidget(Dialog)
         self.formLayoutWidget_2.setGeometry(QtCore.QRect(380, 10, 311, 61))
         self.formLayoutWidget_2.setObjectName("formLayoutWidget_2")
@@ -143,40 +143,53 @@ class Ui_Dialog(object):
         self.formLayout_2.setFormAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.formLayout_2.setContentsMargins(0, 0, 0, 0)
         self.formLayout_2.setObjectName("formLayout_2")
-        self.lblOfferedYear = QtWidgets.QLabel(self.formLayoutWidget_2)
+        self.lblCredits = QtWidgets.QLabel(self.formLayoutWidget_2)
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-        self.lblOfferedYear.setFont(font)
-        self.lblOfferedYear.setObjectName("lblOfferedYear")
-        self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.lblOfferedYear)
-        self.txtOfferedYear = QtWidgets.QLineEdit(self.formLayoutWidget_2)
+        self.lblCredits.setFont(font)
+        self.lblCredits.setObjectName("lblCredits")
+        self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.lblCredits)
+        self.txtCredits = QtWidgets.QLineEdit(self.formLayoutWidget_2)
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-        self.txtOfferedYear.setFont(font)
-        self.txtOfferedYear.setText("")
-        self.txtOfferedYear.setObjectName("txtOfferedYear")
-        self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.txtOfferedYear)
-        self.lblTitle = QtWidgets.QLabel(Dialog)
-        self.lblTitle.setGeometry(QtCore.QRect(10, 10, 121, 61))
+        self.txtCredits.setFont(font)
+        self.txtCredits.setObjectName("txtCredits")
+        self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.txtCredits)
+        self.lblDepartment = QtWidgets.QLabel(self.formLayoutWidget_2)
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        self.lblDepartment.setFont(font)
+        self.lblDepartment.setObjectName("lblDepartment")
+        self.formLayout_2.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.lblDepartment)
+        self.txtDepartment = QtWidgets.QLineEdit(self.formLayoutWidget_2)
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        self.txtDepartment.setFont(font)
+        self.txtDepartment.setObjectName("txtDepartment")
+        self.formLayout_2.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.txtDepartment)
+        self.lblMainTitle = QtWidgets.QLabel(Dialog)
+        self.lblMainTitle.setGeometry(QtCore.QRect(10, 10, 121, 61))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(14)
         font.setBold(False)
         font.setWeight(50)
-        self.lblTitle.setFont(font)
-        self.lblTitle.setAcceptDrops(False)
-        self.lblTitle.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.lblTitle.setAutoFillBackground(False)
-        self.lblTitle.setStyleSheet("background-color: rgb(22, 9, 88);\n"
+        self.lblMainTitle.setFont(font)
+        self.lblMainTitle.setAcceptDrops(False)
+        self.lblMainTitle.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.lblMainTitle.setAutoFillBackground(False)
+        self.lblMainTitle.setStyleSheet("background-color: rgb(22, 9, 88);\n"
 "color: rgb(255, 255, 255);")
-        self.lblTitle.setFrameShape(QtWidgets.QFrame.Box)
-        self.lblTitle.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.lblTitle.setLineWidth(3)
-        self.lblTitle.setAlignment(QtCore.Qt.AlignCenter)
-        self.lblTitle.setWordWrap(True)
-        self.lblTitle.setObjectName("lblTitle")
+        self.lblMainTitle.setFrameShape(QtWidgets.QFrame.Box)
+        self.lblMainTitle.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.lblMainTitle.setLineWidth(3)
+        self.lblMainTitle.setAlignment(QtCore.Qt.AlignCenter)
+        self.lblMainTitle.setWordWrap(True)
+        self.lblMainTitle.setObjectName("lblMainTitle")
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(Dialog)
         self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(700, 10, 81, 61))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
@@ -215,32 +228,35 @@ class Ui_Dialog(object):
         self.verticalLayoutWidget.raise_()
         self.formLayoutWidget.raise_()
         self.formLayoutWidget_2.raise_()
-        self.lblTitle.raise_()
+        self.lblMainTitle.raise_()
         self.verticalLayoutWidget_2.raise_()
+
+        self.initialSetup()
 
         self.retranslateUi(Dialog)
         self.btnClose.accepted.connect(Dialog.accept) # type: ignore
         self.btnClose.rejected.connect(Dialog.reject) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-        self.initialSetup()
-
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Semester Table"))
+        Dialog.setWindowTitle(_translate("Dialog", "Courses Table"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("Dialog", "Semester ID"))
+        item.setText(_translate("Dialog", "Course ID"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("Dialog", "Semester"))
+        item.setText(_translate("Dialog", "Title"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("Dialog", "Offered Year"))
+        item.setText(_translate("Dialog", "Credits"))
+        item = self.tableWidget.horizontalHeaderItem(3)
+        item.setText(_translate("Dialog", "Department"))
         self.btnNew.setText(_translate("Dialog", "New"))
         self.btnEdit.setText(_translate("Dialog", "Edit"))
         self.btnDelete.setText(_translate("Dialog", "Delete"))
-        self.lblSemesterID.setText(_translate("Dialog", "Semester ID:"))
-        self.lblSemester.setText(_translate("Dialog", "Semester:"))
-        self.lblOfferedYear.setText(_translate("Dialog", "Offered Year:"))
-        self.lblTitle.setText(_translate("Dialog", "Semester Table"))
+        self.lblCourseID.setText(_translate("Dialog", "Course ID:"))
+        self.lblTitle.setText(_translate("Dialog", "Title:"))
+        self.lblCredits.setText(_translate("Dialog", "Credits:"))
+        self.lblDepartment.setText(_translate("Dialog", "Department:"))
+        self.lblMainTitle.setText(_translate("Dialog", "Courses Table"))
         self.btnSearch.setText(_translate("Dialog", "Search"))
         self.btnClear.setText(_translate("Dialog", "Clear"))
 
@@ -249,7 +265,7 @@ class Ui_Dialog(object):
     def initialSetup(self):
         self.setupEvents()
         self.setupDatabase()
-        self.refreshSemester()
+        self.refreshCourses()
         # self.setupDatabase()
         # self.setupCombobox()
         # self.setValues()
@@ -261,86 +277,77 @@ class Ui_Dialog(object):
     #########################################################################
 
     def setupEvents(self):
-        self.btnNew.clicked.connect(self.btnNewSemester_clicked)
-        self.btnEdit.clicked.connect(self.btnEditSemester_clicked)
-        self.btnDelete.clicked.connect(self.btnDeleteSemester_clicked)
+        self.btnNew.clicked.connect(self.btnNewCourses_clicked)
+        self.btnEdit.clicked.connect(self.btnEditCourses_clicked)
+        self.btnDelete.clicked.connect(self.btnDeleteCourses_clicked)
         self.btnSearch.clicked.connect(self.btnSearch_clicked)
         self.btnClear.clicked.connect(self.btnClear_clicked)
 
-    def btnNewSemester_clicked(self):
+    def btnNewCourses_clicked(self):
         Dialog = QtWidgets.QDialog()
-        form = SemesterDialog.Ui_SemesterDialog()
+        form = CoursesDialog.Ui_CoursesDialog()
         form.setupUi(Dialog, None)  # None -> no list, no need to send data when creating a new record
         result = Dialog.exec_()
-
-        print("pre result check")
 
         if result == 1:  # This means the user clicked OK
             #   Get the list of results from dialog
             listValues = form.getValues()
 
-            print("precursor")
-
             cursor = self.cnx.cursor()
 
-            query = "Select * From semester"
+            query = "Select * From courses"
 
             cursor.execute(query)
 
             largestID = 0
             # Retreive the largest ID
-            for (Semester_ID, Semester, Year) in cursor:
-                if(Semester_ID > largestID):
-                    largestID = Semester_ID
+            for (ID, Title, Credits, Department) in cursor:
+                if (ID > largestID):
+                    largestID = ID
 
             largestID += 1
-            listValues[0] = str(largestID)
+            listValues[ 0 ] = str(largestID)
 
             print(listValues)
 
             # Insert the values in the database
-            self.insertSemester(listValues)
+            self.insertCourses(listValues)
 
             # Refresh the table
-            self.refreshSemester()
+            self.refreshCourses()
 
-    def btnEditSemester_clicked(self):
+    def btnEditCourses_clicked(self):
         currentRow = self.tableWidget.currentRow()
 
         if currentRow == -1:
             QMessageBox.warning(None, "Select Row", "Please select row first")
             return
 
-        listValues = []
+        listValues = [ ]
         listValues.append(self.tableWidget.item(currentRow, 0).text())
         listValues.append(self.tableWidget.item(currentRow, 1).text())
         listValues.append(self.tableWidget.item(currentRow, 2).text())
+        listValues.append(self.tableWidget.item(currentRow, 3).text())
 
         print(listValues)
 
         Dialog = QtWidgets.QDialog()
-        form = SemesterDialog.Ui_SemesterDialog()
+        form = CoursesDialog.Ui_CoursesDialog()
         form.setupUi(Dialog, listValues)
         result = Dialog.exec_()
 
         if result == 1:  # This means the user clicked OK
             #   Get the list of results from dialog
             newValues = form.getValues()
-            newValues[0] = listValues[0]  # Set the ID to the original value
-
-            # Insert the values in the table
-            # rowCount = self.tblCategories.rowCount()
-            # self.tblCategories.insertRow(rowCount)  # Create new row at the end
-            # self.tblCategories.setItem(rowCount, 0, QTableWidgetItem(listValues[0]))
-            # self.tblCategories.setItem(rowCount, 1, QTableWidgetItem(listValues[1]))
+            newValues[ 0 ] = listValues[ 0 ]  # Set the ID to the original value
 
             # Insert the values in the database
-            self.updateSemester(newValues)
+            self.updateCourses(newValues)
 
             # Refresh the table
-            self.refreshSemester()
+            self.refreshCourses()
 
-    def btnDeleteSemester_clicked(self):
+    def btnDeleteCourses_clicked(self):
         currentRow = self.tableWidget.currentRow()
 
         if currentRow == -1:
@@ -356,27 +363,28 @@ class Ui_Dialog(object):
         )
 
         if answer == QMessageBox.StandardButton.Yes:
-            Semester_ID = self.tableWidget.item(currentRow, 0).text()
+            ID = self.tableWidget.item(currentRow, 0).text()
 
-            # Delete the record from the database
-            self.deleteSemester(Semester_ID)
-
-            # Refresh the table
-            self.refreshSemester()
+            # Delete the values in the database
+            self.deleteCourses(ID)
+            self.refreshCourses()
 
     def btnSearch_clicked(self):
-        ID = self.txtSemesterID.text()
-        FirstName = self.txtSemester.text()
-        LastName = self.txtOfferedYear.text()
+        ID = self.txtCourseID.text()
+        Title = self.txtTitle.text()
+        Credits = self.txtCredits.text()
+        Department = self.txtDepartment.text()
 
-        self.filterSemester(ID, FirstName, LastName)
-
+        self.filterCourses(ID, Title, Credits, Department)
 
     def btnClear_clicked(self):
-        self.txtSemesterID.setText("")
-        self.txtSemester.setText("")
-        self.txtOfferedYear.setText("")
-        self.refreshSemester()
+        self.txtCourseID.setText("")
+        self.txtTitle.setText("")
+        self.txtCredits.setText("")
+        self.txtDepartment.setText("")
+
+        self.refreshCourses()
+
 
     #########################################################################
     #                                                                       #
@@ -393,102 +401,108 @@ class Ui_Dialog(object):
                                             host="127.0.0.1",
                                             database="tracle")
 
-    def refreshSemester(self):
+    def refreshCourses(self):
         self.tableWidget.setRowCount(0)
         cursor = self.cnx.cursor()
 
-        query = "Select * From semester Order by Semester_ID Asc"
+        query = "Select * From courses Order By ID Asc"
 
         cursor.execute(query)
 
-        for(Semester_ID, Semester, Year) in cursor:
+        for(ID, Title, Credits, Department) in cursor:
             rowCount = self.tableWidget.rowCount()
             self.tableWidget.insertRow(rowCount)
-            self.tableWidget.setItem(rowCount, 0, QtWidgets.QTableWidgetItem(str(Semester_ID)))
-            self.tableWidget.setItem(rowCount, 1, QtWidgets.QTableWidgetItem(str(Semester)))
-            self.tableWidget.setItem(rowCount, 2, QtWidgets.QTableWidgetItem(str(Year)))
+            self.tableWidget.setItem(rowCount, 0, QtWidgets.QTableWidgetItem(str(ID)))
+            self.tableWidget.setItem(rowCount, 1, QtWidgets.QTableWidgetItem(str(Title)))
+            self.tableWidget.setItem(rowCount, 2, QtWidgets.QTableWidgetItem(str(Credits)))
+            self.tableWidget.setItem(rowCount, 3, QtWidgets.QTableWidgetItem(str(Department)))
 
         cursor.close()
 
-    def insertSemester(self, a_listValues):
+    def insertCourses(self, a_listValues):
         cursor = self.cnx.cursor()
 
-        query = ("Insert Into semester "
-                 "(Semester_ID, Semester, Offered_Year) "
-                 "Values (%s, %s, %s)")
+        query = ("Insert Into courses "
+                 "(ID, Title, Credits, Department) "
+                 "Values (%s, %s, %s, %s)")
 
-        values = a_listValues
+        listValues = a_listValues
 
-        cursor.execute(query, values)
+        cursor.execute(query, listValues)
 
         self.cnx.commit()
 
         cursor.close()
 
-    def updateSemester(self, listValues):
+    def updateCourses(self, a_listValues):
         cursor = self.cnx.cursor()
 
-        query = ("Update semester "
-                 "Set Semester = %s, Offered_Year = %s "
-                 "Where Semester_ID = %s")
+        query = "Update courses " \
+                "Set Title = %s, Credits = %s, Department = %s " \
+                "Where ID = %s"
 
-        values = listValues
+        listValues = a_listValues
 
-        values.append(values.pop(0))
+        listValues.append(listValues.pop(0))
 
-        cursor.execute(query, values)
+        print(listValues)
+
+        cursor.execute(query, listValues)
 
         self.cnx.commit()
 
         cursor.close()
 
-    def deleteSemester(self, Semester_ID):
+    def deleteCourses(self, a_ID):
         cursor = self.cnx.cursor()
 
-        query = ("Delete From semester "
-                 "Where Semester_ID = %s")
+        print(a_ID)
 
-        values = (Semester_ID,)
+        query = "Delete From courses " \
+                "Where ID = %s"
 
-        cursor.execute(query, values)
+        print(query)
+
+        cursor.execute(query, (a_ID,))
 
         self.cnx.commit()
 
         cursor.close()
 
-    def filterSemester(self, _Semester_ID, _Semester, _Offered_Year):
+    def filterCourses(self, a_ID, a_Title, a_Credits, a_Department):
         self.tableWidget.setRowCount(0)
 
         cursor = self.cnx.cursor()
 
         query = "Select * " \
-                "From semester " \
-                "WHERE (Semester_ID = %s OR %s IS NULL OR %s = '') AND " \
-                "(Semester = %s OR %s IS NULL OR %s = '') AND " \
-                "(Offered_Year = %s OR %s IS NULL OR %s = '') "
+                "From courses " \
+                "WHERE (ID = %s OR %s = '') " \
+                "AND (Title = %s OR %s = '') " \
+                "AND (Credits = %s OR %s = '') " \
+                "AND (Department = %s OR %s = '')"
 
+        values = [ ]
 
-        values = []
-        values.append(_Semester_ID)
-        values.append(_Semester_ID)
-        values.append(_Semester_ID)
-        values.append(_Semester)
-        values.append(_Semester)
-        values.append(_Semester)
-        values.append(_Offered_Year)
-        values.append(_Offered_Year)
-        values.append(_Offered_Year)
+        values.append(a_ID)
+        values.append(a_ID)
+        values.append(a_Title)
+        values.append(a_Title)
+        values.append(a_Credits)
+        values.append(a_Credits)
+        values.append(a_Department)
+        values.append(a_Department)
 
         print(values)
 
         cursor.execute(query, values)
 
-        for (Semester_ID, Semester, Offered_Year) in cursor:
+        for (ID, Title, Credits, Department) in cursor:
             rowCount = self.tableWidget.rowCount()
             self.tableWidget.insertRow(rowCount)
-            self.tableWidget.setItem(rowCount, 0, QtWidgets.QTableWidgetItem(str(Semester_ID)))
-            self.tableWidget.setItem(rowCount, 1, QtWidgets.QTableWidgetItem(str(Semester)))
-            self.tableWidget.setItem(rowCount, 2, QtWidgets.QTableWidgetItem(str(Offered_Year)))
+            self.tableWidget.setItem(rowCount, 0, QtWidgets.QTableWidgetItem(str(ID)))
+            self.tableWidget.setItem(rowCount, 1, QtWidgets.QTableWidgetItem(str(Title)))
+            self.tableWidget.setItem(rowCount, 2, QtWidgets.QTableWidgetItem(str(Credits)))
+            self.tableWidget.setItem(rowCount, 3, QtWidgets.QTableWidgetItem(str(Department)))
 
         cursor.close()
 

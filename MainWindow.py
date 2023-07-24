@@ -15,14 +15,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QCoreApplication
 
-import AttendanceTable
-import ClassTable
-import CoursesTable
-import Credits
-import OfflineHelp
-import Reports
-import SemesterTable
-import StudentsTable
+from windows import ClassTable, StudentsTable, Reports, SemesterTable, AttendanceTable, CoursesTable, Credits, \
+    OfflineHelp
 import socket
 import webbrowser
 import mysql.connector
