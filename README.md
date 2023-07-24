@@ -1,5 +1,5 @@
 # Tracle-Database-Management-System
-A Database Management System written in Python parodied after the real Oracle system. Part of Database Management Systems at Temple University Japan Summer 2023 with Professor Hani Karam.
+A Database Management System written in Python parodied after the real Oracle system. Part of Database Management Systems at Temple University Japan Summer 2023.
 <a name="readme-top"></a>
 ## About The Project
 
