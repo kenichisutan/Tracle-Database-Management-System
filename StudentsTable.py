@@ -26,7 +26,7 @@ QCoreApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)  # Use high DPI icons
 
 
 class Ui_Dialog(object):
-    def setupUi(self, Dialog, listValues):
+    def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(800, 600)
         Dialog.setStyleSheet("")
@@ -248,7 +248,6 @@ class Ui_Dialog(object):
         self.btnClose.rejected.connect(Dialog.reject) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-        self.listValues = listValues
         self.initialSetup()
 
     def retranslateUi(self, Dialog):
@@ -316,13 +315,9 @@ class Ui_Dialog(object):
         form.setupUi(Dialog, None)  # None -> no list, no need to send data when creating a new record
         result = Dialog.exec_()
 
-        print("pre result check")
-
         if result == 1:  # This means the user clicked OK
             #   Get the list of results from dialog
             listValues = form.getValues()
-
-            print("precursor")
 
             cursor = self.cnx.cursor()
 
@@ -474,7 +469,7 @@ class Ui_Dialog(object):
         cursor = self.cnx.cursor()
 
         query = ("Insert Into students "
-                 "(ID, First_Name, Last_Name, Gender, Email, Address, Credits, Status, Major) "
+                 "(ID, First_Name, Last_Name, Gender, Email, Address, Credits, Current_Status, Major) "
                  "Values (%s, %s, %s, %s, %s, %s, %s, %s, %s)")
 
         values = a_listValues
@@ -490,7 +485,7 @@ class Ui_Dialog(object):
         cursor = self.cnx.cursor()
 
         query = ("Update students "
-                 "Set First_Name = %s, Last_Name = %s, Gender = %s, Email = %s, Address = %s, Credits = %s, Status = %s, Major = %s "
+                 "Set First_Name = %s, Last_Name = %s, Gender = %s, Email = %s, Address = %s, Credits = %s, Current_Status = %s, Major = %s "
                  "Where ID = %s")
 
         values = a_listValues
@@ -573,6 +568,6 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     Dialog = QtWidgets.QDialog()
     ui = Ui_Dialog()
-    ui.setupUi(Dialog, None)
+    ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
