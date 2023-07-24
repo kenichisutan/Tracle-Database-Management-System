@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Form implementation generated from reading ui file '.\MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
@@ -16,8 +15,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QCoreApplication
 
-import StudentsDialog
+import AttendanceTable
+import ClassTable
+import CoursesTable
+import Credits
+import OfflineHelp
+import Reports
+import SemesterTable
 import StudentsTable
+import socket
+import webbrowser
+import mysql.connector
 
 QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)  # Enable high DPI scaling
 QCoreApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)  # Use high DPI icons
@@ -362,10 +370,8 @@ class Ui_MainWindow(object):
 
     def initialSetup(self):
         self.setupEvents()
-        # self.setupDatabase()
-        # self.refreshExpenses()
-        # self.refreshCategories()
-        # self.refreshReports()
+        self.setupHostName()
+        self.setupDatabase()
 
     #########################################################################
     #                                                                       #
@@ -382,58 +388,106 @@ class Ui_MainWindow(object):
         self.btnReports.clicked.connect(self.btnReports_clicked)
         self.btnCredits.clicked.connect(self.btnCredits_clicked)
         self.btnExit.clicked.connect(self.btnExit_clicked)
+        self.btnHelp.clicked.connect(self.btnHelp_clicked)
+        self.btnCanvas.clicked.connect(self.btnCanvas_clicked)
+        self.btnDonate.clicked.connect(self.btnDonate_clicked)
+        self.btnOriginal.clicked.connect(self.btnOriginal_clicked)
+
+    def setupHostName(self):
+        hostName = self.getHostName()
+        self.lblHostName.setText(hostName)
 
     def btnStudents_clicked(self):
         Dialog = QtWidgets.QDialog()
-        form = StudentsTable.Ui_StudentsDialog()
+        form = StudentsTable.Ui_Dialog()
         form.setupUi(Dialog)
         result = Dialog.exec_()
 
     def btnClass_clicked(self):
         Dialog = QtWidgets.QDialog()
-        form = ClassDialog.Ui_ClassDialog()
+        form = ClassTable.Ui_Dialog()
         form.setupUi(Dialog)
         result = Dialog.exec_()
 
     def btnCourses_clicked(self):
         Dialog = QtWidgets.QDialog()
-        form = CoursesDialog.Ui_CoursesDialog()
+        form = CoursesTable.Ui_Dialog()
         form.setupUi(Dialog)
         result = Dialog.exec_()
 
     def btnAttendance_clicked(self):
         Dialog = QtWidgets.QDialog()
-        form = AttendanceDialog.Ui_AttendanceDialog()
+        form = AttendanceTable.Ui_Dialog()
         form.setupUi(Dialog)
         result = Dialog.exec_()
 
     def btnSemester_clicked(self):
         Dialog = QtWidgets.QDialog()
-        form = SemesterDialog.Ui_SemesterDialog()
-        form.setupUi(Dialog)
-        result = Dialog.exec_()
-
-    def btnReports_clicked(self):
-        Dialog = QtWidgets.QDialog()
-        form = ReportsDialog.Ui_ReportsDialog()
+        form = SemesterTable.Ui_Dialog()
         form.setupUi(Dialog)
         result = Dialog.exec_()
 
     def btnCredits_clicked(self):
         Dialog = QtWidgets.QDialog()
-        form = CreditsDialog.Ui_CreditsDialog()
+        form = Credits.Ui_CreditsDialog()
+        form.setupUi(Dialog)
+        result = Dialog.exec_()
+
+    def btnReports_clicked(self):
+        Dialog = QtWidgets.QDialog()
+        form = Reports.Ui_ReportsDialog()
         form.setupUi(Dialog)
         result = Dialog.exec_()
 
     def btnExit_clicked(self):
         sys.exit()
 
+    def btnOriginal_clicked(self):
+        webbrowser.open('https://www.oracle.com/hospitality/products/opera-property-services/')
+
+    def btnHelp_clicked(self):
+        Dialog = QtWidgets.QDialog()
+        form = OfflineHelp.Ui_Dialog()
+        form.setupUi(Dialog)
+        result = Dialog.exec_()
+
+    def btnCanvas_clicked(self):
+        webbrowser.open('https://templeu.instructure.com/')
+
+    def btnDonate_clicked(self):
+        webbrowser.open('https://www.paypal.com/signin')
+
     #########################################################################
     #                                                                       #
-    #                            Database                                   #
+    #                            Others                                     #
     #                                                                       #
     #########################################################################
 
+    def getHostName(self):
+        try:
+            return socket.gethostname()
+        except socket.error as e:
+            print("Error:", e)
+            return "CANNOT-BE-RETREIVED"
+
+    def setupDatabase(self):
+        self.connect()
+
+    def connect(self, user="root", password="12345678", host="127.0.0.1", database="tracle"):
+        try:
+            self.cnx = mysql.connector.connect(user=user,
+                                               password=password,
+                                               host=host,
+                                               database=database)
+        except Exception as e:
+            print("Error:", e)
+            print("Database cannot be connected.")
+            # Update schema name
+            self.lblSchemaName.setText("CANNOT-BE-REACHED")
+            return None
+        else:
+            # Update schema name
+            self.lblSchemaName.setText(database)
 
 
 
