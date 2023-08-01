@@ -28,6 +28,7 @@ Tracle is purely a parody meant for entertainment purposes. It is not intended f
 ![Gallery](gallery/gallery1.png)
 ![Gallery](gallery/gallery2.png)
 ![Gallery](gallery/gallery3.png)
+https://youtu.be/mUSAfyvV9Xw Introduction video
 
 ## The team:
 ![Gallery](gallery/credits.png)
